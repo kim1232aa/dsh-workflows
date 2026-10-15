@@ -1,0 +1,4 @@
+# dsh-workflows bundle patch: mounts the plugin next to dsh-base's own `workflow` tool.
+- insert:
+    - id: dsh-workflows
+      name: dsh-workflows
