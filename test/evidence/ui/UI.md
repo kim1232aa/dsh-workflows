@@ -21,3 +21,15 @@
 | 自写前端包 | 理论可写 `dsh-client-ui-*` 前端插件，但需 dsh 前端构建链/HMR 与内部 slot API（预览期未稳定），本轮未做 | `dsh-client-ui-slots` 等包 |
 
 实现方式：插件以 `dsh-tool-workflow` 相同的协议写会话记录 `tool-workflow/run-start|agent-start|agent-end|run-end`（`index.js` recordStart），因此 dsh 自带 `dsh-client-ui-workflow-run` 直接渲染我们的运行。
+
+## 同一 workflow 终端对照（`test/e2e/wf-script.js`，mock LLM 每个子 agent 延迟 4s）
+
+pi：tmux 里跑 `pi`（交互 TUI）；dsh：tmux 里跑 `dsh wftest '…'`（headless，dsh 没有交互 TUI 前端）。tmux `capture-pane -e` → ANSI → HTML → Chrome 渲染成 PNG（`*.ansi` 为原始捕获）。
+
+| 阶段 | pi | dsh 终端 | dsh web（:3192） | 差异 |
+|---|---|---|---|---|
+| 启动 | `pi-1-start.png` | `dsh-1-start.png` | — | pi 立即返回「started in the background」+ runId；dsh 前台阻塞，此时无输出 |
+| 运行中（Fan out） | `pi-2-running.png` | `dsh-2-running.png` | `dsh-web-run-fanout.png` | pi：输入框上方 widget `◆ e2e_fanout 3/4 agents · Combine`；dsh 终端：插件新增的 stderr 进度行（phase + 每个 agent ◌/●）；web：原生 workflow-run 节点 |
+| 运行中（Combine） | `pi-3-running-combine.png` | `dsh-3-running-combine.png` | `dsh-web-run-combine.png` | 同上 |
+| 完成 | `pi-4-done.png` | `dsh-4-done.png` | `dsh-web-done.png` | pi 把 `[workflow-result]` 回投到对话并接着跑一轮；dsh 打印 `● completed` 和最终 JSON |
+| 导航器 / 命令 | `pi-5-navigator.png` | — | `dsh-web-slash-workflows.png` | pi 是交互式（Phases 侧栏 + 每 agent 模型/tok）；dsh `/workflows` 是纯文本树 |

@@ -23,6 +23,7 @@ export const Config = Schema.object({
   tokenBudget: Schema.natural().description('Default heuristic token budget exposed via `budget` (chars/4 estimate).'),
   savedDir: Schema.string().description('User saved-workflow dir (default ~/.dsh-workflows/saved).'),
   maxResultChars: Schema.natural().default(20000),
+  terminalProgress: Schema.union(['auto', 'on', 'off']).default('auto').description('Print pi-style progress lines to stderr (auto = only when stderr is a TTY, e.g. dsh headless in a terminal).'),
 }).i18n({ 'zh-CN': { $description: '动态多智能体 workflow（移植自 pi-dynamic-workflows）。', tiers: '模型档位映射 small/medium/big -> provider/model。' } })
 
 const DESCRIPTION = `Run a JavaScript orchestration script that fans work out across isolated subagents (pi-dynamic-workflows compatible).
@@ -46,6 +47,14 @@ export function apply(ctx, config = {}) {
   ctx.on?.('workflow/log', (info, msg) => runs.onEvent(info.id, (r) => { r.logs.push(msg); if (r.logs.length > 200) r.logs.shift() }))
   // Durable chat records — same protocol as dsh-tool-workflow, so dsh-client-ui-workflow-run
   // renders our runs as a workflow-run node (phases → members, live status).
+  const tp = config.terminalProgress ?? 'auto'
+  const progressOn = tp === 'on' || (tp === 'auto' && process.stderr.isTTY)
+  const say = (id) => progressOn && runs.onEvent(id, (r) => {
+    process.stderr.write(`\x1b[36m◆ workflow\x1b[0m ${r.name} · ${r.phase ?? '-'} · ${r.agents.ended}/${r.agents.started} agents` +
+      (r.members.length ? '  [' + r.members.map((m) => (m.outcome ? (m.outcome === 'completed' ? '●' : '✗') : '◌') + m.label.slice(0, 16)).join(' ') + ']' : '') + '\n')
+  })
+  ctx.on?.('workflow/phase', (info) => say(info.id))
+  ctx.on?.('workflow/end', (info, r) => progressOn && process.stderr.write(`\x1b[32m● workflow\x1b[0m ${info.meta?.name} ${r.stopReason} · ${r.agentsStarted} agents\n`))
   const sessions = new Map()
   const rec = (runId, type, data) => {
     const s = sessions.get(runId); if (!s) return
@@ -53,10 +62,12 @@ export function apply(ctx, config = {}) {
   }
   ctx.on?.('workflow/agent-start', (info, a) => {
     runs.onEvent(info.id, (r) => { r.agents.started++; r.members.push({ seq: a.seq, label: a.label, phase: a.phase }) })
+    say(info.id)
     rec(info.id, 'tool-workflow/agent-start', { runId: info.id, seq: a.seq, label: a.label, ...(a.phase === undefined ? {} : { phase: a.phase }), childId: a.childId })
   })
   ctx.on?.('workflow/agent-end', (info, a) => {
     runs.onEvent(info.id, (r) => { r.agents.ended++; const m = r.members.find((x) => x.seq === a.seq); if (m) m.outcome = a.outcome })
+    say(info.id)
     rec(info.id, 'tool-workflow/agent-end', { runId: info.id, seq: a.seq, outcome: a.outcome })
   })
   const recordStart = (session, run) => {

@@ -1,6 +1,6 @@
 {
   "name": "dsh-workflows",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "DeepSeek Harness plugin: Claude-style dynamic multi-agent workflows (port of @quintinshaw/pi-dynamic-workflows).",
   "type": "module",
   "main": "index.js",

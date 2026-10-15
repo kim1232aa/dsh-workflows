@@ -12,6 +12,7 @@ http.createServer((q, s) => {
     const msgs = req.messages ?? []
     const tools = (req.tools ?? []).map((t) => t.function?.name ?? t.name).filter(Boolean)
     const textAll = allText(msgs)
+    const lastUserText = flat([...msgs].reverse().find((m) => m.role === 'user')?.content)
     const last = msgs[msgs.length - 1] ?? {}
     appendFileSync(LOG, JSON.stringify({ n: msgs.length, tools: tools.slice(0, 8), lastRole: last.role, hasRUN: textAll.includes('RUN_WF'), hasTool: last.role === 'tool', stream: !!req.stream }) + '\n')
     const base = { id: 'chatcmpl-mock', object: 'chat.completion', created: Date.now() / 1000 | 0, model: 'mock-1', usage: { prompt_tokens: 10, completion_tokens: 20, total_tokens: 30 } }
@@ -45,10 +46,10 @@ http.createServer((q, s) => {
       // structured via JSON in text if no submit tool
       return reply(JSON.stringify({ real: true, reason: 'mock', score: 8, complete: true, missing: [] }))
     }
-    if (textAll.includes('RUN_WF') && !tools.includes('dynamic_workflow') && tools.includes('workflow')) {
+    if ((textAll.includes('RUN_WF') && !msgs.some((m) => m.role === 'tool')) && !tools.includes('dynamic_workflow') && tools.includes('workflow')) {
       return reply(null, [{ id: 'call_wf1', type: 'function', function: { name: 'workflow', arguments: JSON.stringify({ script: SCRIPT.replace(/await workflow\('e2e-child'[^)]*\)/, "await agent('ITEM:child', { tier: 'medium' })"), args: { items: ['alpha', 'beta', 'gamma'] } }) } }])
     }
-    if (textAll.includes('RUN_WF') && tools.includes('dynamic_workflow')) {
+    if ((textAll.includes('RUN_WF') && !msgs.some((m) => m.role === 'tool')) && tools.includes('dynamic_workflow')) {
       return reply(null, [{ id: 'call_wf1', type: 'function', function: { name: 'dynamic_workflow', arguments: JSON.stringify({ script: SCRIPT, args: { items: ['alpha', 'beta', 'gamma'] } }) } }])
     }
     return reply('ok (no RUN_WF)')
