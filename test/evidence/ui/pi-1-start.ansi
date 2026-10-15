@@ -1,0 +1,42 @@
+
+ [38;5;3mWarning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf and restart tmux.[39m
+
+
+ RUN_WF run the e2e workflow
+
+
+
+ workflow
+ Workflow "e2e_fanout" started in the background.
+ Run ID: e2e-fanout-mv90x4jr-smamic
+ It keeps running on its own. When it finishes, the result is delivered back
+ here and the conversation continues automatically — the user does not need to
+ do anything. Tell the user they can simply wait here for it to finish (it will
+ resume the conversation by itself), or keep chatting / working on other things
+ in the meantime; either way the result will come back to this conversation.
+ They can also track or cancel it with /workflows status e2e-fanout-mv90x4jr-smamic or /workflows stop e2e-fanout-mv90x4jr-smamic.
+ To revise without re-running everything: re-call workflow with resumeFromRunId="e2e-fanout-mv90x4jr-smamic" and an edited script — unchanged agent()
+ calls replay from cache, only edited/new ones re-run. For a run paused inside a fan-out, add resumeMode="replay-completed" to also replay completed
+ fan-out siblings across the never-completed gap.
+
+
+ FINAL: Workflow "e2e_fanout" started in the background.
+ Run ID: e2e-fanout-mv90x4jr-smamic
+ It keeps running on its own. When it finishes, the result is delivered back
+ here and the conversation continues automatically — the user does not need to
+ do anything. Tell the user they can simply wait here for it to finish (it will
+ resume the conversation by itself), or keep chatting / working on other things
+ in the meantime; either way the result will come back to this conversation.
+ They can also track or cancel it with /workflows status e2e-fanout-mv90x4jr-smamic or /workflows stop e2e-fanout-mv90x4jr-smamic.
+ To revise without re-running everything: re-call workflow with resumeFromRunId="e2e-fanout-mv90x4jr-smamic" and an edited script — unchanged agent()
+ calls replay from cache, only edited/new ones re-run. For a run paused inside a fan-out, add resumeMode="replay-completed" to also replay completed
+ fan-out siblings across the never-completed gap.
+
+[2m──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[0m[workflow] An agent requested opts.tier but no model-tiers.json is configured, so tiers currently fall back to mock/mock-1. Run /workflows-models to 1
+[2m──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[0mWorkflows running (1):
+  ◆ e2e_fanout  0/3 agents · Fan out
+[2m  /workflows — open navigator[0m
+[2m/tmp/piwf2 (master)[0m
+[2m↑20 ↓40 0.0%/128k (auto)                                                                                                                        mock-1

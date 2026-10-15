@@ -1,0 +1,42 @@
+ To revise without re-running everything: re-call workflow with resumeFromRunId="e2e-fanout-mv90x4jr-smamic" and an edited script — unchanged agent()
+ calls replay from cache, only edited/new ones re-run. For a run paused inside a fan-out, add resumeMode="replay-completed" to also replay completed
+ fan-out siblings across the never-completed gap.
+
+
+ [1m[38;5;5m[workflow-result][0m
+
+ [2m✓ Background workflow "e2e_fanout" finished (5 agents · 120 tok · 8.1s).[0m
+
+ [2m{[0m
+ [2m  "outs": [[0m
+ [2m    "processed-alpha",[0m
+ [2m    "processed-beta",[0m
+ [2m    "processed-gamma"[0m
+ [2m  ],[0m
+ [2m  "[0m[38;5;5m╭─[2m[39m workflows [0m[38;5;5m───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮[39m
+ [2m   [0m[38;5;5m│ e2e_fanout[39m                                                                                                                               [38;5;5m │[39m
+ [2m   [0m[38;5;5m│ [2m[39mcompleted[0m                                                                                                            [2m4/4 agents · 120 tok[0m[38;5;5m │[39m
+ [2m  ][0m[38;5;5m│ [2m[39m┌ Phases ───────┬─ Fan out · 3 agents ──────────────────────────────────────────────────────────────────────────────────────────────────┐[0m[38;5;5m │[39m
+ [2m  "[0m[38;5;5m│ [2m[39m│[0m[38;5;5m› 1 Fan out[39m [38;5;5m3/3[2m[39m│[0m  [38;5;2m●[39m [38;5;5mbeta[39m   [2mmock-1[0m                                                                                                [2m30 tok│[0m[38;5;5m │[39m
+ [2m   [0m[38;5;5m│ [2m[39m│[0m  2 Combine [38;5;2m1/1[2m[39m│[0m  [38;5;2m●[39m [38;5;5mgamma[39m  [2mmock-1[0m                                                                                                [2m30 tok│[0m[38;5;5m │[39m
+ [2m   [0m[38;5;5m│ [2m[39m│[0m               [2m│[0m  [38;5;2m●[39m [38;5;5malpha[39m  [2mmock-1[0m                                                                                                [2m30 tok│[0m[38;5;5m │[39m
+ [2m   [0m[38;5;5m│ [2m[39m└───────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘[0m[38;5;5m │[39m
+ [2m  }[0m[38;5;5m│ [39m                                                                                                                                         [38;5;5m │[39m
+ [2m  "[0m[38;5;5m│ [2m[39m↑/↓ select · enter open · esc back · q quit[0m                                                                                              [38;5;5m │[39m
+ [2m  "[0m[38;5;5m╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯[39m
+ [2m  "budgetSpent": true,[0m
+ [2m  "ck": "yes"[0m
+ [2m}[0m
+
+ [2m↳ Full result:
+[0m [2m/tmp/piagent/workflows/projects/piwf2-5034ee6afe9e/runs/e2e-fanout-mv90x4jr-smamic.json.result-bc27cf063b35d07bd471b06e35a76df57b523e6076102dd9d3229
+[0m [2m1ad4cd4ca6f[0m
+
+
+ ok (no RUN_WF)
+
+[2m──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[0;7m [0m
+[2m──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/tmp/piwf2 (master)[0m
+[2m↑30 ↓60 0.0%/128k (auto)                                                                                                                        mock-1

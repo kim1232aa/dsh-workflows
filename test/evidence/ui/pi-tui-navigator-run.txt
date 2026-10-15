@@ -1,0 +1,45 @@
+   "cwd": "/tmp/piwf",
+   "budgetSpent": true,
+   "ck": "yes"
+ }
+
+ ↳ Full result:
+ /tmp/piagent/workflows/projects/piwf-9f0f926836fd/runs/e2e-fanout-mv90pern-xjv7nh.json.result-116ca17d3fb5384ae7e64f96d6f919bce4c591f049cb0714182dd3f5f13d78d2
+
+
+
+ workflow
+ Workflow "e2e_fanout" started in the background.
+ Run ID: e2e-fanout-mv90pl24-qeexax
+ It keeps running on its own. When it finishes, the result is delivered back
+ here and the conversation continues automatically — the user does not need to
+ do anything. Tell the user they can simply wait here for it to finish (it will
+ resume the conversation by itself), or keep chatting / working on other things
+ in t╭─ workflows ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ They│ e2e_fanout                                                                                                                                         │
+ To r│ completed                                                                                                                     4/4 agents · 120 tok │
+ repl│ ┌ Phases ───────┬─ Fan out · 3 agents ───────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │ings
+ acro│ │› 1 Fan out 3/3│  ● gamma  mock-1                                                                                                         30 tok│ │
+     │ │  2 Combine 1/1│  ● alpha  mock-1                                                                                                         30 tok│ │
+     │ │               │  ● beta   mock-1                                                                                                         30 tok│ │
+ FINA│ └───────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ │
+ Run │                                                                                                                                                    │
+ It k│ ↑/↓ select · enter open · esc back · q quit                                                                                                        │
+ here╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+ do anything. Tell the user they can simply wait here for it to finish (it will
+ resume the conversation by itself), or keep chatting / working on other things
+ in the meantime; either way the result will come back to this conversation.
+ They can also track or cancel it with /workflows status e2e-fanout-mv90pl24-qeexax or /workflows stop e2e-fanout-mv90pl24-qeexax.
+ To revise without re-running everything: re-call workflow with resumeFromRunId="e2e-fanout-mv90pl24-qeexax" and an edited script — unchanged agent() calls
+ replay from cache, only edited/new ones re-run. For a run paused inside a fan-out, add resumeMode="replay-completed" to also replay completed fan-out siblings
+ across the never-completed gap.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Workflows running (2):
+  ◆ e2e_fanout  0/3 agents · Fan out
+  ◆ e2e_fanout  3/4 agents · Combine
+  /workflows — open navigator (136 finished kept in history)
+/tmp/piwf (master)
+↑2.8k ↓5.5k 0.0%/128k (auto)                                                                                                                              mock-1
