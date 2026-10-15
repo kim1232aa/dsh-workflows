@@ -1,0 +1,422 @@
+{
+  "at": "2026-10-15T03:53:27.913Z",
+  "results": [
+    {
+      "id": "agent-basic",
+      "readme": "agent(prompt) spawn isolated subagent",
+      "pi": {
+        "ok": true,
+        "value": "processed-one",
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": "processed-one",
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "agent-tier",
+      "readme": "agent({ tier }) model routing",
+      "pi": {
+        "ok": true,
+        "value": "processed-t",
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": "processed-t",
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "agent-schema",
+      "readme": "agent({ schema }) structured output",
+      "pi": {
+        "ok": true,
+        "value": {
+          "real": true,
+          "reason": "mock"
+        },
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": {
+          "real": true,
+          "reason": "mock"
+        },
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "parallel",
+      "readme": "parallel(thunks) concurrent fan-out preserves order",
+      "pi": {
+        "ok": true,
+        "value": [
+          "processed-a",
+          "processed-b",
+          "processed-c"
+        ],
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": [
+          "processed-a",
+          "processed-b",
+          "processed-c"
+        ],
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "pipeline",
+      "readme": "pipeline(items, ...stages)",
+      "pi": {
+        "ok": true,
+        "value": [
+          "processed-s2-processed-s1-a",
+          "processed-s2-processed-s1-b"
+        ],
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": [
+          "processed-s2-processed-s1-a",
+          "processed-s2-processed-s1-b"
+        ],
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "phase-log",
+      "readme": "phase(title) + log(message)",
+      "pi": {
+        "ok": true,
+        "value": "done",
+        "logs": [
+          "hello",
+          "hello"
+        ]
+      },
+      "dsh": {
+        "ok": true,
+        "value": "done",
+        "logs": [
+          "hello"
+        ]
+      },
+      "consistent": true
+    },
+    {
+      "id": "verify",
+      "readme": "verify(item, { reviewers, threshold })",
+      "pi": {
+        "ok": true,
+        "value": {
+          "real": true,
+          "realCount": 2,
+          "total": 2,
+          "votes": [
+            {
+              "real": true,
+              "reason": "mock"
+            },
+            {
+              "real": true,
+              "reason": "mock"
+            }
+          ]
+        },
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": {
+          "real": true,
+          "realCount": 2,
+          "total": 2,
+          "votes": [
+            {
+              "real": true,
+              "reason": "mock"
+            },
+            {
+              "real": true,
+              "reason": "mock"
+            }
+          ]
+        },
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "judgePanel",
+      "readme": "judgePanel(attempts, { judges })",
+      "pi": {
+        "ok": true,
+        "value": {
+          "index": 0,
+          "attempt": "attempt A",
+          "score": 8,
+          "judgments": [
+            {
+              "score": 8,
+              "reason": "mock"
+            },
+            {
+              "score": 8,
+              "reason": "mock"
+            }
+          ]
+        },
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": {
+          "index": 0,
+          "attempt": "attempt A",
+          "score": 8,
+          "judgments": [
+            {
+              "score": 8,
+              "reason": "mock"
+            },
+            {
+              "score": 8,
+              "reason": "mock"
+            }
+          ]
+        },
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "loopUntilDry",
+      "readme": "loopUntilDry({ round, maxRounds })",
+      "pi": {
+        "ok": true,
+        "value": [
+          "x0",
+          "x1"
+        ],
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": [
+          "x0",
+          "x1"
+        ],
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "completenessCheck",
+      "readme": "completenessCheck(taskArgs, results)",
+      "pi": {
+        "ok": true,
+        "value": {
+          "complete": true,
+          "missing": []
+        },
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": {
+          "complete": true,
+          "missing": []
+        },
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "retry-gate",
+      "readme": "retry() + gate()",
+      "pi": {
+        "ok": true,
+        "value": {
+          "a": "ok",
+          "g": {
+            "ok": true,
+            "value": 1,
+            "attempts": 2
+          }
+        },
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": {
+          "a": "ok",
+          "g": {
+            "ok": true,
+            "value": 1,
+            "attempts": 2
+          }
+        },
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "checkpoint",
+      "readme": "checkpoint(prompt, { default }) headless",
+      "pi": {
+        "ok": true,
+        "value": "yes",
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": "yes",
+        "logs": [
+          "[checkpoint] continue? -> headless default"
+        ]
+      },
+      "consistent": true
+    },
+    {
+      "id": "budget-cwd",
+      "readme": "budget + cwd + process.cwd()",
+      "pi": {
+        "ok": true,
+        "value": {
+          "cwd": "/tmp",
+          "processCwd": "/tmp",
+          "spent": true,
+          "remaining": true
+        },
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": {
+          "cwd": "/tmp",
+          "processCwd": "/tmp",
+          "spent": true,
+          "remaining": true
+        },
+        "logs": []
+      },
+      "consistent": true
+    },
+    {
+      "id": "nested-workflow",
+      "readme": "workflow('savedName', args) nested",
+      "pi": {
+        "ok": false,
+        "error": "WorkflowError: `export const meta = { name, description, phases }` must be the first statement in the script",
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": 84,
+        "logs": [
+          "[workflow] child"
+        ]
+      },
+      "consistent": true,
+      "note": "child script provided via resolveNamed / pi saved"
+    },
+    {
+      "id": "isolation-worktree",
+      "readme": "agent({ isolation: \"worktree\" })",
+      "pi": {
+        "ok": true,
+        "value": "processed-wt",
+        "logs": [
+          "worktree kept: /tmp/wf-git/.pi/worktrees/run-mv907hvm-0-w-cce56ad0-42cb-4dba-aaa4-558293cbd059 (pi/wf/run-mv907hvm-0-w-cce56ad0-42cb-4dba-aaa4-558293cbd059)",
+          "worktree kept: /tmp/wf-git/.pi/worktrees/run-mv907hvm-0-w-cce56ad0-42cb-4dba-aaa4-558293cbd059 (pi/wf/run-mv907hvm-0-w-cce56ad0-42cb-4dba-aaa4-558293cbd059)"
+        ]
+      },
+      "dsh": {
+        "ok": true,
+        "value": "processed-wt",
+        "logs": [
+          "[dsh-workflows] agent option \"isolation\" not supported on dsh; ignored"
+        ]
+      },
+      "consistent": true
+    },
+    {
+      "id": "builtin-generators",
+      "readme": "5 built-in patterns generate scripts",
+      "pi": {
+        "ok": true,
+        "count": 5,
+        "names": [
+          "deep-research",
+          "adversarial-review",
+          "code-review",
+          "multi-perspective",
+          "codebase-audit"
+        ]
+      },
+      "dsh": {
+        "ok": true,
+        "gens": [
+          {
+            "name": "deep-research",
+            "ok": true,
+            "len": 3406
+          },
+          {
+            "name": "adversarial-review",
+            "ok": true,
+            "len": 2010
+          },
+          {
+            "name": "code-review",
+            "ok": true,
+            "len": 7270
+          },
+          {
+            "name": "multi-perspective",
+            "ok": true,
+            "len": 1005
+          },
+          {
+            "name": "codebase-audit",
+            "ok": true,
+            "len": 769
+          }
+        ]
+      },
+      "consistent": true
+    },
+    {
+      "id": "args-global",
+      "readme": "args tool input exposed as args global",
+      "pi": {
+        "ok": true,
+        "value": {
+          "hello": "world"
+        },
+        "logs": []
+      },
+      "dsh": {
+        "ok": true,
+        "value": {
+          "hello": "world"
+        },
+        "logs": []
+      },
+      "consistent": true
+    }
+  ]
+}

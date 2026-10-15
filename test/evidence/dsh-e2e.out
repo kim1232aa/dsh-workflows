@@ -1,0 +1,26 @@
+(node:1514288) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+FINAL: workflow "e2e_fanout" completed (runId=3f36c833-2cc7-4d4d-b75c-9a48106aaedb, agents=4)
+{
+  "outs": [
+    "processed-alpha",
+    "processed-beta",
+    "processed-gamma"
+  ],
+  "dry": [
+    "a",
+    "b"
+  ],
+  "gate": {
+    "ok": true,
+    "value": 1,
+    "attempts": 2
+  },
+  "sum": {
+    "joined": "processed-alpha+processed-beta+processed-gamma",
+    "r": "processed-child processed-alpha,processed-beta,processed-gamma"
+  },
+  "cwd": "/workspace/dsh-workflows",
+  "budgetSpent": true,
+  "ck": "yes"
+}
