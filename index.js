@@ -44,8 +44,27 @@ export function apply(ctx, config = {}) {
 
   ctx.on?.('workflow/phase', (info, title) => runs.onEvent(info.id, (r) => { r.phase = title }))
   ctx.on?.('workflow/log', (info, msg) => runs.onEvent(info.id, (r) => { r.logs.push(msg); if (r.logs.length > 200) r.logs.shift() }))
-  ctx.on?.('workflow/agent-start', (info) => runs.onEvent(info.id, (r) => { r.agents.started++ }))
-  ctx.on?.('workflow/agent-end', (info) => runs.onEvent(info.id, (r) => { r.agents.ended++ }))
+  // Durable chat records — same protocol as dsh-tool-workflow, so dsh-client-ui-workflow-run
+  // renders our runs as a workflow-run node (phases → members, live status).
+  const sessions = new Map()
+  const rec = (runId, type, data) => {
+    const s = sessions.get(runId); if (!s) return
+    try { s.append(type, data) } catch (e) { sessions.delete(runId); ctx.logger?.warn?.(`dsh-workflows: record ${type} failed: ${e}`) }
+  }
+  ctx.on?.('workflow/agent-start', (info, a) => {
+    runs.onEvent(info.id, (r) => { r.agents.started++; r.members.push({ seq: a.seq, label: a.label, phase: a.phase }) })
+    rec(info.id, 'tool-workflow/agent-start', { runId: info.id, seq: a.seq, label: a.label, ...(a.phase === undefined ? {} : { phase: a.phase }), childId: a.childId })
+  })
+  ctx.on?.('workflow/agent-end', (info, a) => {
+    runs.onEvent(info.id, (r) => { r.agents.ended++; const m = r.members.find((x) => x.seq === a.seq); if (m) m.outcome = a.outcome })
+    rec(info.id, 'tool-workflow/agent-end', { runId: info.id, seq: a.seq, outcome: a.outcome })
+  })
+  const recordStart = (session, run) => {
+    if (!session?.append) return
+    sessions.set(run.id, session)
+    rec(run.id, 'tool-workflow/run-start', { runId: run.id, name: run.meta.name })
+    run.result.then((r) => { run.dispose().catch(() => {}).finally(() => { rec(run.id, 'tool-workflow/run-end', { runId: run.id, stopReason: r.stopReason }); sessions.delete(run.id) }) })
+  }
 
   ctx.tools.register(defineTool({
     name: config.toolName ?? 'dynamic_workflow',
@@ -82,6 +101,7 @@ export function apply(ctx, config = {}) {
         ...(input.background ? {} : { signal: exec.signal }),
       })
       const rec = runs.add(run, m, script)
+      if (exec.parent === undefined) recordStart(parent.session, run)
       if (input.background) {
         run.result.finally(() => run.dispose().catch(() => {}))
         return `workflow "${m.name}" started in background. runId=${run.id}. Check with ${config.controlToolName ?? 'workflow_control'} {action:"status", runId}.`
@@ -98,6 +118,26 @@ export function apply(ctx, config = {}) {
       }
     },
   }))
+
+  // `/workflows` slash command (pi parity: list / status <id> / stop <id> / save <name> / builtins).
+  ctx.inject?.(['commands'], (c) => {
+    c.commands.register({
+      name: 'workflows',
+      description: 'Dynamic workflows: list runs, status <id>, stop <id>, save <name>, builtins',
+      input: { hint: '[list|status <id>|stop <id>|save <name>|builtins]' },
+      handler: (inv) => {
+        const [cmd = 'list', arg] = inv.rawInput.trim().split(/\s+/)
+        const all = [...runs.runs.values()]
+        const pick = () => (arg ? runs.get(arg) ?? all.find((r) => r.id.startsWith(arg)) : all[all.length - 1])
+        if (cmd === 'list') return { kind: 'success', text: all.length ? 'Workflows (' + all.length + '):\n' + all.map((r) => runs.tree(r)).join('\n\n') : 'No workflow runs yet.' }
+        if (cmd === 'status') { const r = pick(); return r ? { kind: 'success', text: runs.tree(r) + (r.result ? '\n\nresult: ' + clip(JSON.stringify(r.result.value), 2000) : '') } : { kind: 'error', text: 'unknown run' } }
+        if (cmd === 'stop') { const r = pick(); if (!r) return { kind: 'error', text: 'unknown run' }; r.run.cancel('stopped by /workflows'); return { kind: 'success', text: 'stop requested: ' + r.id } }
+        if (cmd === 'save') { if (!arg || !runs.lastScript) return { kind: 'error', text: 'usage: /workflows save <name> (after a run)' }; return { kind: 'success', text: 'saved ' + storeFor(process.cwd()).save(arg, runs.lastScript) } }
+        if (cmd === 'builtins') return { kind: 'success', text: BUILTINS.map((b) => `${b.name} — ${b.description}`).join('\n') }
+        return { kind: 'error', text: 'usage: /workflows [list|status <id>|stop <id>|save <name>|builtins]' }
+      },
+    })
+  })
 
   ctx.tools.register(defineTool({
     name: config.controlToolName ?? 'workflow_control',

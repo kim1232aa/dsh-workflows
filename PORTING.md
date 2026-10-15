@@ -126,3 +126,10 @@ node test/e2e/mock-llm.mjs &
 dsh plugin --profile wftest add file:$(npm pack -q --pack-destination /tmp)
 MOCK_API_KEY=mock dsh wftest "RUN_WF please"
 ```
+
+
+---
+
+## 4. 界面展示（v0.2.x）
+
+见 [`test/evidence/ui/UI.md`](test/evidence/ui/UI.md)。摘要：dsh 原生 workflow-run 节点（phase→成员、实时状态）✅；`/workflows` 文字树命令 ✅；pi 常驻 widget、交互导航器、暂停、每 agent tok/模型 ❌（dsh 无对应插件 UI API）。
