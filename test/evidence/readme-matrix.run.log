@@ -1,0 +1,105 @@
+[
+  {
+    "id": "agent-basic",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "agent-tier",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "agent-schema",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "parallel",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "pipeline",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "phase-log",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "verify",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "judgePanel",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "loopUntilDry",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "completenessCheck",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "retry-gate",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "checkpoint",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "budget-cwd",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "nested-workflow",
+    "consistent": true,
+    "pi": false,
+    "dsh": true
+  },
+  {
+    "id": "isolation-worktree",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "builtin-generators",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  },
+  {
+    "id": "args-global",
+    "consistent": true,
+    "pi": true,
+    "dsh": true
+  }
+]
+wrote test/evidence/readme-matrix.json
