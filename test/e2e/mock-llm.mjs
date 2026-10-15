@@ -36,13 +36,17 @@ http.createServer((q, s) => {
     // after tool result
     if (last.role === 'tool') return reply('FINAL: ' + flat(last.content).slice(0, 2000))
     // subagent child turns
-    if (/ITEM:/.test(textAll)) {
+    if (/ITEM:/.test(textAll) && !textAll.includes('RUN_WF')) {
       const m = /ITEM:([^\n]+)/.exec(textAll)
-      return reply('processed-' + (m?.[1] ?? 'x').trim())
+      const d = Number(process.env.MOCK_DELAY_MS || 0)
+      return setTimeout(() => reply('processed-' + (m?.[1] ?? 'x').trim()), d)
     }
     if (/skeptical reviewer|Score this attempt|completely covered/.test(textAll)) {
       // structured via JSON in text if no submit tool
       return reply(JSON.stringify({ real: true, reason: 'mock', score: 8, complete: true, missing: [] }))
+    }
+    if (textAll.includes('RUN_WF') && !tools.includes('dynamic_workflow') && tools.includes('workflow')) {
+      return reply(null, [{ id: 'call_wf1', type: 'function', function: { name: 'workflow', arguments: JSON.stringify({ script: SCRIPT.replace(/await workflow\('e2e-child'[^)]*\)/, "await agent('ITEM:child', { tier: 'medium' })"), args: { items: ['alpha', 'beta', 'gamma'] } }) } }])
     }
     if (textAll.includes('RUN_WF') && tools.includes('dynamic_workflow')) {
       return reply(null, [{ id: 'call_wf1', type: 'function', function: { name: 'dynamic_workflow', arguments: JSON.stringify({ script: SCRIPT, args: { items: ['alpha', 'beta', 'gamma'] } }) } }])

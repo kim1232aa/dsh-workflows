@@ -1,0 +1,13 @@
+/workflows list  (dsh web, 2026-10-15 12:11 UTC+8)
+Workflows (1):
+● e2e_fanout  f5d0bb4a-34f8-4f90-92dd-f3d54886fa76 · completed · 4/4 agents · Combine
+  1 Fan out 3/3
+     ● gamma · completed
+     ● alpha · completed
+     ● beta · completed
+  2 Combine 1/1
+     ● ITEM:child processed-alpha,processed-beta,proce… · completed
+  log: [dsh-workflows] agent option "isolation" not supported on dsh; ignored
+  log: fan-out done: 3
+  log: [workflow] e2e-child
+  log: [checkpoint] go? -> headless default

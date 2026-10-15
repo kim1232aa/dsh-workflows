@@ -1,0 +1,45 @@
+   "cwd": "/tmp/piwf",
+   "budgetSpent": true,
+   "c╭─ workflows ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ }   │ Workflows  [  1-36 / 138 ↓]                                                                                                                        │
+     │   ◆ e2e_fanout  e2e-fanout-mv90pl24-qeexax · running · 0/3                                                                                         │
+ ↳ Fu│ ❯ ✓ e2e_fanout  e2e-fanout-mv90pern-xjv7nh · completed · 4/4 · 120 tok                                                                             │
+ /tmp│   ◆ e2e_fanout  e2e-fanout-mv90ph1z-0ld1a2 · running · 3/4 · 90 tok                                                                                │78d2
+     │   ✓ e2e_fanout  e2e-fanout-mv90parx-f8540y · completed · 4/4 · 120 tok                                                                             │
+     │   ✓ e2e_fanout  e2e-fanout-mv90p8fr-he498d · completed · 4/4 · 120 tok                                                                             │
+     │   ✓ e2e_fanout  e2e-fanout-mv90p4he-6bbqru · completed · 4/4 · 120 tok                                                                             │
+ work│   ✓ e2e_fanout  e2e-fanout-mv90p25f-fqmfcp · completed · 4/4 · 120 tok                                                                             │
+ Work│   ✓ e2e_fanout  e2e-fanout-mv90oy79-ah7r9i · completed · 4/4 · 120 tok                                                                             │
+ Run │   ✓ e2e_fanout  e2e-fanout-mv90ovuu-zds9q2 · completed · 4/4 · 120 tok                                                                             │
+ It k│   ✗ e2e_fanout  e2e-fanout-mv90ovr5-9hf2ux · failed · 0/0                                                                                          │
+ here│   ✗ e2e_fanout  e2e-fanout-mv90ovnx-0hc1bo · failed · 0/0                                                                                          │
+ do a│   ✗ e2e_fanout  e2e-fanout-mv90ovkr-96r1vc · failed · 0/0                                                                                          │
+ resu│   ✗ e2e_fanout  e2e-fanout-mv90ovhq-630aa1 · failed · 0/0                                                                                          │
+ in t│   ✗ e2e_fanout  e2e-fanout-mv90ovej-wyakwz · failed · 0/0                                                                                          │
+ They│   ✗ e2e_fanout  e2e-fanout-mv90ovbd-941neo · failed · 0/0                                                                                          │
+ To r│   ✗ e2e_fanout  e2e-fanout-mv90ov87-px4j0a · failed · 0/0                                                                                          │
+ repl│   ✗ e2e_fanout  e2e-fanout-mv90ov54-e7qt7c · failed · 0/0                                                                                          │ings
+ acro│   ✗ e2e_fanout  e2e-fanout-mv90ov23-mq1rf8 · failed · 0/0                                                                                          │
+     │   ✗ e2e_fanout  e2e-fanout-mv90ouys-bxt6zx · failed · 0/0                                                                                          │
+     │   ✗ e2e_fanout  e2e-fanout-mv90ouvm-8ui1ui · failed · 0/0                                                                                          │
+ FINA│   ✗ e2e_fanout  e2e-fanout-mv90ousg-sulo6a · failed · 0/0                                                                                          │
+ Run │   ✗ e2e_fanout  e2e-fanout-mv90oup6-zd9thg · failed · 0/0                                                                                          │
+ It k│   ✗ e2e_fanout  e2e-fanout-mv90oum6-0qr7ol · failed · 0/0                                                                                          │
+ here│   ✗ e2e_fanout  e2e-fanout-mv90ouhg-5qh1tw · failed · 0/0                                                                                          │
+ do a│   ✗ e2e_fanout  e2e-fanout-mv90oueb-zyyjjp · failed · 0/0                                                                                          │
+ resu│   ✗ e2e_fanout  e2e-fanout-mv90oub9-f473mm · failed · 0/0                                                                                          │
+ in t│   ✗ e2e_fanout  e2e-fanout-mv90ou83-f93lks · failed · 0/0                                                                                          │
+ They│   ✗ e2e_fanout  e2e-fanout-mv90ou4t-2ptr6u · failed · 0/0                                                                                          │
+ To r│   ✗ e2e_fanout  e2e-fanout-mv90ou1p-vam84s · failed · 0/0                                                                                          │
+ repl│   ✗ e2e_fanout  e2e-fanout-mv90otyn-cdvckz · failed · 0/0                                                                                          │ings
+ acro│   ✗ e2e_fanout  e2e-fanout-mv90otvj-jecxvb · failed · 0/0                                                                                          │
+     │   ✗ e2e_fanout  e2e-fanout-mv90otrh-5y5len · failed · 0/0                                                                                          │
+─────│   ✗ e2e_fanout  e2e-fanout-mv90otog-inse7k · failed · 0/0                                                                                          │─────
+     │   ✗ e2e_fanout  e2e-fanout-mv90otld-ugaht3 · failed · 0/0                                                                                          │
+─────│   ✗ e2e_fanout  e2e-fanout-mv90oti9-34mfon · failed · 0/0                                                                                          │─────
+Workf│   ✗ e2e_fanout  e2e-fanout-mv90otdv-gh5q21 · failed · 0/0                                                                                          │
+  ◆ e│                                                                                                                                                    │
+  ◆ e│ ↑/↓ select · / filter · enter open · esc back · p pause · x stop · r restart · s save · q quit                                                     │
+  /wo╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+/tmp/piwf (master)
+↑2.8k ↓5.5k 0.0%/128k (auto)                                                                                                                              mock-1
